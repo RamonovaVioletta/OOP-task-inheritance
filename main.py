@@ -102,6 +102,30 @@ class Reviewer(Mentor):
         '''
 
 
+def get_average_students_grade(students, course):
+    if not students or not course:
+        return 'Нет данных'
+    average_grades = []
+    for student in students:
+        student_grade = average(
+            [grade for course, grade in student.grades.items() if course == course]
+        ) or 0
+        average_grades.append(student_grade)
+    return average(average_grades)
+
+
+def get_average_lecturers_grade(lecturers, course):
+    if not lecturers or not course:
+        return 'Нет данных'
+    average_grades = []
+    for lecturer in lecturers:
+        lecturer_grade = average(
+            [grade for course, grade in lecturer.grades.items() if course == course]
+        ) or 0
+        average_grades.append(lecturer_grade)
+    return average(average_grades)
+
+
 student_1 = Student('Alla', 'Gurina', 'female')
 student_1.courses_in_progress += ['Python']
 
@@ -129,8 +153,13 @@ reviewer_1.rate_to_std(student_1, 'Python', 2)
 reviewer_1.rate_to_std(student_2, 'Python', 9)
 
 
-print(reviewer_1)
-print(lecturer_2)
-print(student_1)
+average_stud_gr = get_average_students_grade([student_1, student_2], 'Python')
+average_lec_gr = get_average_lecturers_grade([lecturer_1, lecturer_2], 'Python')
 
+print(lecturer_1.grades)
+print(student_1.grades)
+print(student_1 > student_2)
+print(lecturer_1 < lecturer_2)
+print('Средняя оценка студента: ', average_stud_gr)
+print('Средняя оценка лектора: ', average_lec_gr)
 
